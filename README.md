@@ -81,7 +81,7 @@ sudo ldconfig
 ```
 
 ## Accessing the UML Diagrams
-- To access the UML Diagrams, go the UML Directory in the repository. 
+- To access the UML Diagrams, go the UML Sub-Directory in the repository. 
 
 
 
