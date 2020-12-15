@@ -86,4 +86,4 @@ class ObstacleAvoidance {
         bool getObstacleDetected();    
 
         void setObstacleDetected(bool present);
-}
+};
