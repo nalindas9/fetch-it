@@ -1,0 +1,6 @@
+<launch>
+  <test pkg="fetch-it"
+  		type="fetch_it_test"
+  		test-name="fetch_it_test"
+  />
+</launch>

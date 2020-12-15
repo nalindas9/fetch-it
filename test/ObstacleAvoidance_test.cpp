@@ -1,12 +1,11 @@
 /**
- * @file ObstacleAvoidance.cpp
- * @brief Source file to implement obstacle avoidance class
- * @date 12/07/2020
- * @author Nidhi Bhojak
+ * @file ObstacleAvoidance_test.cpp
+ * @brief Test file for ObstacleAvoidance class
+ * @date 12/15/2020
+ * @author Sukoon Sarin
  * @author Nalin Das
  * 
  * @section LICENSE
- * BSD 3-Clause License
  *
  * @copyright (c) 2020, Nalin Das, Sukoon Sarin, Nidhi Bhojak
  * All rights reserved.
@@ -34,45 +33,39 @@
  *
  * @section DESCRIPTION 
  * 
- * Source file to implement obstacle avoidance  
+ * File containing unit tests for Class ObstacleAvoidance
+ *		   
  */
-
-#include "ros/ros.h"
+#include "../include/ObstacleAvoidance.h"
+#include <gtest/gtest.h>
+#include <ros/ros.h>
 #include "geometry_msgs/Twist.h"
 #include "sensor_msgs/LaserScan.h"
-#include "../include/ObstacleAvoidance.h"
 
-ObstacleAvoidance::ObstacleAvoidance() {
-    obstacle_present = false;
-    LaserScan = nh.subscribe<sensor_msgs::LaserScan>("/scan", 1000, &ObstacleAvoidance::laserScanCallback, this);
+/**
+ * @brief	Test to check obstacle detected or not
+ */
+TEST(ObstacleAvoidanceTest, obstacleNotDetected) {
+    ObstacleAvoidance obstacleavoidance_dummy;
+    EXPECT_FALSE(obstacleavoidance_dummy.checkObstacle());
 }
 
-ObstacleAvoidance::~ObstacleAvoidance() {
+/**
+ * @brief	Test to check getters and setters
+ */
+TEST(ObstacleAvoidanceTest, obstacleDetected) {
+    ObstacleAvoidance obstacleavoidance_dummy;
+    obstacleavoidance_dummy.setObstacleDetected(true);
+    EXPECT_TRUE(obstacleavoidance_dummy.getObstacleDetected());
 }
 
-bool ObstacleAvoidance::getObstacleDetected() {
-    return obstacle_present;
+/**
+ * @brief Check obstacle
+ */
+TEST(ObstacleAvoidanceTest, checkObstacle) {
+    ObstacleAvoidance obstacleavoidance_dummy;
+    /// Define distance threshold to detect obstacles 
+    double distance = 0.3;
+    //how to call lasersensorcallback function()
+    EXPECT_TRUE(obstacleavoidance_dummy.checkObstacle());
 }
-
-void ObstacleAvoidance::setObstacleDetected(bool present) {
-    obstacle_present = present;
-}
-
-void ObstacleAvoidance::laserScanCallback(const sensor_msgs::LaserScan::ConstPtr& data) {
-    double distance = data->ranges[180];
-    //ROS_WARN_STREAM("Distance:" << distance);
-    if (distance < 0.6) {
-        setObstacleDetected(true);
-        return;        
-    }
-    setObstacleDetected(false);
-}
-
-bool ObstacleAvoidance::checkObstacle() {
-    if (getObstacleDetected()) {
-        ROS_WARN_STREAM("Obstacle Ahead!");
-        return true;
-    }
-    return false;
-}
-
