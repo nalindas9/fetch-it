@@ -15,6 +15,10 @@ The diagram depicting the overall framework process can be accessed from [here](
 2. Sukoon Sarin - sukoonsarin
 3. Nidhi Bhojak - nbhojak07
 
+## Presentation 
+- The presentation slides can be viewed from [here](https://docs.google.com/presentation/d/1ziL8vnf1k-Nsx0coOIeDWfG2G3LviOGE_k53tatEt-w/edit?usp=sharing)
+- Recorded Presentation Video can be accessed from here
+
 ## License 
 - This project has been developed under the 3-Clause BSD License.
 - Before cloning the repository, kindly go through the license [here](https://github.com/nbhojak07/fetch-it/blob/iteration-1/LICENSE)
@@ -79,9 +83,33 @@ sudo /bin/bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
 sudo ldconfig
 
 ```
+## Build 
+Switch to your src sub-directory of the ROS Workspace to clone this repository
+```
+<ROS Workspace>/src
+```
+Run the following commands to clone and build this project:
+```
+git clone --recursive https://github.com/nalindas9/fetch-it
+cd ..
+catkin_make
+```
+## Test 
+Close and terminate everything including rosmaster. In a new terminal, switch to the ROS workspace and build the tests and type,
+```
+cd catkin_ws
+source devel/setup.bash
+catkin_make run_tests_fetch-it
+```
 
+## Run
+We will use launch file to run the package. In a new terminal, enter:
+```
+cd catkin_ws
+source devel/setup.bash
+roslaunch fetch-it fetch-it.launch
+```
 ## Accessing the UML Diagrams
-- To access the UML Diagrams, go the UML Sub-Directory in the repository. 
-
+- To access the UML Diagrams, go the UML Sub-Directory in the repository which contains folders for initial as well as the revised UML diagrams.
 
 

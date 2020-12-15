@@ -1,9 +1,8 @@
 /**
- * @file ObstacleAvoidance.h
- * @brief Header file to implement Obstacle Avoidance 
- * @date 12/07/2020
- * @author Nidhi Bhojak
- * 
+ * @file detect_main.cpp
+ * @brief Source main file for detection
+ * @date 12/12/2020
+ * @author Nalin Das
  * 
  * @section LICENSE
  *
@@ -33,56 +32,32 @@
  *
  * @section DESCRIPTION 
  * 
- * Class file to implement obstacle avoidance  
+ * Main source file for the fetch-it object detection algorithm
  *		   
  */
+#include <ros/ros.h>
+#include <std_msgs/Int8.h>
+#include "../include/DetectBall.h"
 
-#pragma once
+int main(int argc, char** argv) {
+    // Initialize main node
+    ros::init(argc, argv, "detect_main");
+    // DetectBall class object
+    DetectBall detect_ball;
+    ros::NodeHandle n;
+    // ROS Publisher
+    ros::Publisher detect_pub = n.advertise<std_msgs::Int8>("ball_present", 1000);
+    std_msgs::Int8 msg;
+    while (ros::ok()) {
+        cv::Mat image = detect_ball.getCvImage();
+        if (!image.empty()) {
+            bool ball_detected = detect_ball.templateMatching();
+            //ROS_WARN_STREAM("ball_detected: " << ball_detected);
+            msg.data = ball_detected;
+            detect_pub.publish(msg);
+        }
+        ros::spinOnce();
+    }
 
-#include "ros/ros.h"
-#include "sensor_msgs/LaserScan.h"
-
-class ObstacleAvoidance {
-    private:
-        // Create the ROS Nodehandle
-        ros::NodeHandle nh;
-
-        // ROS Subscriber to get sensor data
-        ros::Subscriber LaserScan;
-
-        // Boolean variable to check if obstacle present
-        bool obstacle_present;
-    public: 
-        /**
-         * @brief Constructor for obstacle avoidance class
-         * @param none
-         * @return none
-         *  **/
-        ObstacleAvoidance();
-
-        /**
-         * @brief Destructor for obstacle avoidance class
-         * @param none
-         * @return none
-         *  **/
-        ~ObstacleAvoidance();
-
-         /**
-         * @brief Check obstacle function to check if there is obstacle
-         * @param none 
-         * @return bool value true or false for obstacle found
-         *  **/
-        bool checkObstacle();
-
-        /**
-         * @brief Laser Callback function
-         * @param data from LaserScan node
-         * @return void
-         *  **/
-
-        void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr& data);
- 
-        bool getObstacleDetected();
-
-        void setObstacleDetected(bool present);
-};
+    return 0;
+}
