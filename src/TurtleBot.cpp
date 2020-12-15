@@ -53,7 +53,7 @@ TurtleBot::TurtleBot() {
     velocity.angular.z = 0.0;
  
     velocity_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
-
+    detect_sub = nh.subscribe<std_msgs::Int8>("ball_present", 1000, &TurtleBot::detectCallback, this);
 }
 
 TurtleBot::~TurtleBot() {
@@ -82,9 +82,8 @@ void TurtleBot::moveTurtle() {
         geometry_msgs::Twist twist;
         // True if obstacle present
         obstacle_present = obstacle_avoidance.checkObstacle();
-        //bool ball_present = getBallPresent();
-        ROS_WARN_STREAM("obstacle_present: " << obstacle_present);
-        if (!obstacle_present) {
+        ROS_WARN_STREAM("obstacle_present: " << obstacle_present << "ball_present:" << getBallPresent());
+        if (!obstacle_present && getBallPresent()) {
             ROS_WARN_STREAM("Moving forward ...");
             moveAhead(-0.12);
         } else {
@@ -119,4 +118,10 @@ void TurtleBot::setObstaclePresent(bool present) {
 
 bool TurtleBot::getObstaclePresent() {
     return obstacle_present;
+}
+
+void TurtleBot::detectCallback(const std_msgs::Int8::ConstPtr& msg) {
+    //ROS_WARN_STREAM("I heard: [%s]" << msg->data);
+    (msg->data == 1) ? setBallPresent(true) : setBallPresent(false);
+    //ROS_WARN_STREAM("ball_present inside callback:" << getBallPresent());
 }
