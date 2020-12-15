@@ -112,7 +112,7 @@ class TurtleBot {
          * @param none
          * @return void
          *  **/
-       bool reset();
+       void reset();
 
        void setBallPresent(bool ball_present_);
 

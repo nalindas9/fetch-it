@@ -43,43 +43,37 @@
 #include "detectBall.h"
 #include "obstacleAvoidance.h"
 
-Turtlebot:Turtlebot() {
-    ROS_INFO_STREAM"Starting the turtlebot...");
-    obstacleAvoidance Obstacle;
-    linaerVel = 0;
-    angualrVel = 0; 
-    ros::NodeHandle nh; 
-    pubVelocities = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10 );
-    ROS_INFO_STREAM("Done Setting up Turtlebot!");
+TurtleBot:TurtleBot() {
 }
 
-Turtlebot::~Turtlebot() {
-    if (reset()) {
-        ROS_INFO_STREAM("Reseting Turtlebot Velocities");
-    }
+TurtleBot::~TurtleBot() {
 }
 
-void Turtlebot::moveAhead(float linearVal) {
-    Velocity.linear.x = linearVel;
-    Velocity.angular.z = 0.0;
-
-    return;
+void TurtleBot::moveAhead(float linear_vel) {
+    velocity.linear.x = 0.3;
+    velocity.angular.z = 0.0;
 }
 
-void Turtlebot::turn(float angularVal) {
+void TurtleBot::turn(float angular_vel) {
     Velocity.linear.x = 0.0;
-    Velocity.angular.z = angularVel;
-
-    return;
+    Velocity.angular.z = 0.4;
 }
 
-void Turtlebot::collect() {
-    return;
+void TurtleBot::collect() {
 }
 
-void Turtlebot::moveTurtle() { 
-    return;
+void TurtleBot::moveTurtle() { 
+    moveAhead(-0.12);
+    velocity_pub.publish(velocity);
 }
-bool Turtlebot::reset() {
-    return true;
+
+void TurtleBot::reset() {
+}
+
+void TurtleBot::setBallPresent(bool ball_present_) {
+    ball_present = ball_present_;
+}
+
+bool TurtleBot::getBallPresent() {
+    return ball_present;
 }
