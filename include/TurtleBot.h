@@ -64,6 +64,9 @@ class TurtleBot {
         // Twist Object for Velocities
         geometry_msgs::Twist velocity;
 
+        // ROS subscriber to ball present topic
+        ros::Subscriber detect_sub;
+
         // Publishing Rate
         int publish_rate;
 
@@ -126,4 +129,6 @@ class TurtleBot {
        void setObstaclePresent(bool present);
 
        bool getObstaclePresent();
+
+       void detectCallback(const std_msgs::Int8::ConstPtr& msg);
 };
