@@ -3,6 +3,9 @@
  * @brief Header file to control the turtlebot motion
  * @date 12/07/2020
  * @author Nidhi Bhojak
+ * @author Nalin Das
+ * 
+ * @section LICENSE
  * 
  * BSD 3-Clause License
  *
@@ -30,87 +33,87 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+ * @section DESCRIPTION 
+ * 
+ * Header file for turtlebot motion control
  */
 
 #pragma once 
 
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
-#include "../ObstacleAvoidance.h"
-#include "../DetectBall.h"
+#include "../include/ObstacleAvoidance.h"
+#include "../include/DetectBall.h"
 
 class TurtleBot {
     private:
         // Obstacle avoidance object
         ObstacleAvoidance obstacle_avoidance;
-        
         // DetectBall class object
         DetectBall detect_ball;
-
+        
+        // Store ball detected status
+        bool ball_present;
         // Define ROS Nodehandle
         ros::NodeHandle nh;
-
+        // Store obstacle present status
+        bool obstacle_present;
         // Publisher to publish velocities
         ros::Publisher velocity_pub;
 
         // Twist Object for Velocities
         geometry_msgs::Twist velocity;
 
-        // Linear Velocity in X-axis
-        float linearVel;
-
-        // Angular Velocity about Z-axis
-        float angularVel;
-
         // Publishing Rate
         int publish_rate;
+
     public: 
         /**
          * @brief Constructor for Turtlebot class
          * @param none
          * @return none
          *  **/
-        Turtlebot();
+        TurtleBot();
 
         /**
          * @brief Destructor for Turtlebot class
          * @param none
          * @return none
          *  **/
-        ~Turtlebot();
+        ~TurtleBot();
 
         /**
-         * @brief Function to move robot ahead
-         * @param none
-         * @return void
+         * @brief Function to move turtlebot ahead
+         * @param linear_vel Linear Velocity
+         * @return None
          *  **/
         void moveAhead(float linear_vel);
 
         /**
          * @brief Function to rotate the robot
-         * @param none
+         * @param angular_vel Angular velocity
          * @return void
          *  **/
         void turn(float angular_vel);
 
         /**
-         * @brief Function to collect the Object 
+         * @brief Function to pick up the tennis ball 
          * @param none
-         * @return void
+         * @return None
          *  **/
         void collect();
 
         /**
-         * @brief Implementing algorithm for robot motion
-         * @param none
-         * @return none
+         * @brief Move the turtlebot while avoiding obstacles
+         * @param None None
+         * @return None
          *  **/
         void moveTurtle();
 
         /**
          * @brief Reset Velocities
          * @param none
-         * @return void
+         * @return None
          *  **/
        void reset();
 
@@ -118,4 +121,9 @@ class TurtleBot {
 
        bool getBallPresent();
 
+       geometry_msgs::Twist getVelocity();
+
+       void setObstaclePresent(bool present);
+
+       bool getObstaclePresent();
 };

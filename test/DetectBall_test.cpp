@@ -1,9 +1,9 @@
 /**
- * @file turtlebot.cpp
- * @brief Source file to implement turtlebot class
- * @date 12/07/2020
- * @author Nidhi Bhojak
- * 
+ * @file TurtleBot_test.cpp
+ * @brief Test file for DetectBall class
+ * @date 12/15/2020
+ * @author Sukoon Sarin
+ * @author Nalin Das
  * 
  * @section LICENSE
  *
@@ -33,47 +33,43 @@
  *
  * @section DESCRIPTION 
  * 
- * Controls motion of the turtlebot 
+ * File containing unit tests for turtlebot class
  *		   
  */
+#include <ros/ros.h>
+#include "../include/TurtleBot.h"
+#include <gtest/gtest.h>
 
-#include "ros/ros.h"
-#include "geometry_msgs/Twist.h"
-#include "turtlebot.h"
-#include "detectBall.h"
-#include "obstacleAvoidance.h"
 
-TurtleBot:TurtleBot() {
+/**
+ * @brief Check getters and setters
+ */
+
+TEST(DetectBallTest, objectNotDetected) {
+    DetectBall detectball_dummy;
+    detectball_dummy.setBallDetected(false);
+    EXPECT_FALSE(detectball_dummy.getBallDetected());
 }
 
-TurtleBot::~TurtleBot() {
+/**
+ * @brief Check getters and setters
+ */
+
+TEST(DetectBallTest, objectDetected) {
+    DetectBall detectball_dummy;
+    detectball_dummy.setBallDetected(true);
+    EXPECT_TRUE(detectball_dummy.getBallDetected());
 }
 
-void TurtleBot::moveAhead(float linear_vel) {
-    velocity.linear.x = 0.3;
-    velocity.angular.z = 0.0;
+/**
+ * @brief Test case for TemplateMatching method of DetectBall class
+ */
+TEST(DetectionTest, templateMatched) {
+    DetectBall detectball_dummy;
+    cv::Mat cv_image = cv::imread("../data/Tennis_Ball.jpg");
+    detectball_dummy.templateMatching();
+    EXPECT_FALSE(detectball_dummy.templateMatching());
 }
 
-void TurtleBot::turn(float angular_vel) {
-    Velocity.linear.x = 0.0;
-    Velocity.angular.z = 0.4;
-}
 
-void TurtleBot::collect() {
-}
 
-void TurtleBot::moveTurtle() { 
-    moveAhead(-0.12);
-    velocity_pub.publish(velocity);
-}
-
-void TurtleBot::reset() {
-}
-
-void TurtleBot::setBallPresent(bool ball_present_) {
-    ball_present = ball_present_;
-}
-
-bool TurtleBot::getBallPresent() {
-    return ball_present;
-}
