@@ -1,5 +1,5 @@
 /**
- * @file turtlebot.hpp
+ * @file turtlebot.h
  * @brief Header file to control the turtlebot motion
  * @date 12/07/2020
  * @author Nidhi Bhojak
@@ -39,16 +39,22 @@
 #include "../ObstacleAvoidance.h"
 #include "../DetectBall.h"
 
-class Turtlebot {
+class TurtleBot {
     private:
+        // Obstacle avoidance object
+        ObstacleAvoidance obstacle_avoidance;
+        
+        // DetectBall class object
+        DetectBall detect_ball;
+
         // Define ROS Nodehandle
         ros::NodeHandle nh;
 
         // Publisher to publish velocities
-        ros::Publisher pubVelocities;
+        ros::Publisher velocity_pub;
 
         // Twist Object for Velocities
-        geometry_msgs::Twist Velocity;
+        geometry_msgs::Twist velocity;
 
         // Linear Velocity in X-axis
         float linearVel;
@@ -57,8 +63,7 @@ class Turtlebot {
         float angularVel;
 
         // Publishing Rate
-        int PublishRate;
-
+        int publish_rate;
     public: 
         /**
          * @brief Constructor for Turtlebot class
@@ -79,14 +84,14 @@ class Turtlebot {
          * @param none
          * @return void
          *  **/
-        void moveAhead(float linearVal);
+        void moveAhead(float linear_vel);
 
         /**
          * @brief Function to rotate the robot
          * @param none
          * @return void
          *  **/
-        void turn(float angularVal);
+        void turn(float angular_vel);
 
         /**
          * @brief Function to collect the Object 
@@ -100,13 +105,17 @@ class Turtlebot {
          * @param none
          * @return none
          *  **/
-        void moveTurtle(obstacleAvoidance& ObstacleAvoidance);
+        void moveTurtle();
 
         /**
          * @brief Reset Velocities
          * @param none
          * @return void
          *  **/
-       bool reset();
+       void reset();
 
-}
+       void setBallPresent(bool ball_present_);
+
+       bool getBallPresent();
+
+};

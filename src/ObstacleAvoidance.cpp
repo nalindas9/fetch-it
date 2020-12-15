@@ -38,30 +38,22 @@
 #include "ObstacleAvoidance.hpp"
 
 obstacleAvoidance::obstacleAvoidance() {
-    ROS_INFO_STREAM("Starting ObstacleAvoidance Module for Robot...");
-    linearVel = 1.5;
-    angularVel = 0.5;
-    isObstacle = false;
-    LaserScan = nh.subscribe<sensor_msgs::LaserScan("/scan", 1000, &obtacleAvoidance::LaserScanCallback, this);
-    ROS_INFO_STREAM("Done setting up..");
 }
 
 obstacleAvoidance::~obstacleAvoidance() {}
 
 void obstacleAvoidance::LaserScanCallback(const sensor_msgs::LaserScan::ConstPtr& data) {
-    for (const float &range : data->ranges) {
-        if (range < 0.2) {
-            setObstacleDetected(true);
-            return;        
-        }
-    }
-    setObstacleDetected(false);
+    setObstacleDetected(true);
 }
 
 bool obstacleAvoidance::checkObstacle() {
-    if (getObstacleDetected()) {
-        ROS_WARN_STREAM("Obstacle Ahead!");
         return true;
-    }
-    return false;
+}
+
+bool ObstacleAvoidance::getObstacleDetected() {
+    return obstacle_present;
+}
+
+void ObstacleAvoidance::setObstacleDetected(bool present) {
+    obstacle_present = present;
 }

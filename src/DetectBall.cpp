@@ -48,8 +48,18 @@ DetectBall::DetectBall() {
   
 }
 
+DetectBall::~DetectBall() {
+}
+
 bool Detect::templateMatching(cv::Mat image) {
   return true;
 }
 
-ObjectDetection::~ObjectDetection() {}
+void DetectBall::kinectCallback(const sensor_msgs::Image::ConstPtr& msg) {
+  cv::Mat image;
+  cv_image = image;
+}
+
+cv::Mat DetectBall::getCvImage() {
+    return cv_image;
+}
