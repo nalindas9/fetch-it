@@ -52,21 +52,20 @@ class ObstacleAvoidance {
 
         // Boolean variable to check if obstacle present
         bool obstacle_present;
-
     public: 
         /**
          * @brief Constructor for obstacle avoidance class
          * @param none
          * @return none
          *  **/
-        obstacleAvoidance();
+        ObstacleAvoidance();
 
         /**
          * @brief Destructor for obstacle avoidance class
          * @param none
          * @return none
          *  **/
-        ~obstacleAvoidance();
+        ~ObstacleAvoidance();
 
          /**
          * @brief Check obstacle function to check if there is obstacle
@@ -83,7 +82,7 @@ class ObstacleAvoidance {
 
         void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr& data);
  
-        bool getObstacleDetected();    
+        bool getObstacleDetected();
 
         void setObstacleDetected(bool present);
 };
