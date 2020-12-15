@@ -47,12 +47,22 @@
 
 class DetectBall {
  private:
-  /// Node Handle for ROS system
+  // Node Handle for ROS system
   ros::NodeHandle nh;
 
-  /// Container to store converted image from cv_bridge
-  cv::Mat tempImage;
+  // Kinect Subscriber
+  ros::Subscriber kinect_subscriber;
 
+  // Array to store contours for each image
+  std::vector<std::vector<cv::Point>> contours_array;
+
+  // Container to store converted image from cv_bridge
+  cv::Mat cv_image;
+
+  // For storing the HSV image and mask image
+  cv::Mat mask_image, hsv_image;
+
+  // Stores object detected status
   bool ObjectDetected;
 
  public:
@@ -71,6 +81,13 @@ class DetectBall {
   ~DetectBall();
 
   /**
+   * @brief Kinect sensor callback
+   * @param msg Sensor msg with RGB Image data
+   * @return None
+   */
+  void kinectCallback(const sensor_msgs::Image::ConstPtr& msg);
+
+  /**
    * @brief   Method to implement template matching
    * @param   Image filtered image of type cv::Mat
    * @return  Match found of type bool
@@ -82,18 +99,21 @@ class DetectBall {
    * @param   none
    * @return  Object detected or not of type bool
    */
-  bool getBallDetected() const {
-    return ObjectDetected;
-  }
+  bool getBallDetected();
 
   /**
    * @brief   Set detected Object
    * @param   object detected status
    * @return  none
    */
-  void setBallDetected(bool object) {
-    ObjectDetected = object;
-  }
+  void setBallDetected(bool object);
+
+  /**
+   * @brief Get OpenCV converted image
+   * @param None None
+   * @return Converted OpenCV Image
+   */
+  cv::Mat getCvImage();
 };
 
 #endif  // INCLUDE_DETECTBALL_H_
