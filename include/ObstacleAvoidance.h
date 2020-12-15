@@ -1,5 +1,5 @@
 /**
- * @file ObstacleAvoidance.hpp
+ * @file ObstacleAvoidance.h
  * @brief Header file to implement Obstacle Avoidance 
  * @date 12/07/2020
  * @author Nidhi Bhojak
@@ -42,7 +42,7 @@
 #include "ros/ros.h"
 #include "sensor_msgs/LaserScan.h"
 
-class obstacleAvoidance {
+class ObstacleAvoidance {
     private:
         // Create the ROS Nodehandle
         ros::NodeHandle nh;
@@ -50,12 +50,8 @@ class obstacleAvoidance {
         // ROS Subscriber to get sensor data
         ros::Subscriber LaserScan;
 
-        // Boolean variable to check the obstacle
-        bool isObstacle;
-
-        // BOt Velocities
-        float linearVel;
-        float angularVel;
+        // Boolean variable to check if obstacle present
+        bool obstacle_present;
 
     public: 
         /**
@@ -87,11 +83,7 @@ class obstacleAvoidance {
 
         void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr& data);
  
-        bool getObstacleDetected(){
-            return isObstacle;
-        };
+        bool getObstacleDetected();    
 
-        void setObstacleDetected(bool obstacle) {
-            isObstacle = obstacle;
-        }
+        void setObstacleDetected(bool present);
 }
