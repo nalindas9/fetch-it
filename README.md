@@ -17,7 +17,7 @@ The diagram depicting the overall framework process can be accessed from [here](
 
 ## Presentation 
 - The presentation slides can be viewed from [here](https://docs.google.com/presentation/d/1ziL8vnf1k-Nsx0coOIeDWfG2G3LviOGE_k53tatEt-w/edit?usp=sharing)
-- Recorded Presentation Video can be accessed from [here](https://youtu.be/n4SizNe3f0I)
+- Recorded Presentation Video can be accessed from [here](https://youtu.be/gi4kzVk1ybs)
 
 ## License 
 - This project has been developed under the 3-Clause BSD License.
