@@ -41,6 +41,7 @@
 #pragma once 
 
 #include "ros/ros.h"
+#include <std_msgs/Int8.h>
 #include "geometry_msgs/Twist.h"
 #include "../include/ObstacleAvoidance.h"
 #include "../include/DetectBall.h"
