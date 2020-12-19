@@ -36,9 +36,12 @@
  * File containing unit tests for turtlebot class
  *		   
  */
+
+#include <gtest/gtest.h>
 #include <ros/ros.h>
 #include "../include/TurtleBot.h"
-#include <gtest/gtest.h>
+
+
 
 
 /**

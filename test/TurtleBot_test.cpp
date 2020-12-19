@@ -37,9 +37,8 @@
  *		   
  */
 #include <ros/ros.h>
-#include "../include/TurtleBot.h"
 #include <gtest/gtest.h>
-
+#include "../include/TurtleBot.h"
 
 /**
  * @brief Class initialization test

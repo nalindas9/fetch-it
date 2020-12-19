@@ -1,4 +1,7 @@
 /**
+ * Copyright 2020 Nalin Das, Nidhi Bhojak, Sukoon Sarin
+ * BSD 3-Clause License
+ * 
  * @file ObstacleAvoidance.cpp
  * @brief Source file to implement obstacle avoidance class
  * @date 12/07/2020
@@ -44,7 +47,9 @@
 
 ObstacleAvoidance::ObstacleAvoidance() {
     obstacle_present = false;
-    LaserScan = nh.subscribe<sensor_msgs::LaserScan>("/scan", 1000, &ObstacleAvoidance::laserScanCallback, this);
+    LaserScan = nh.subscribe<sensor_msgs::LaserScan>("/scan",
+                 1000, &ObstacleAvoidance::laserScanCallback,
+                 this);
 }
 
 ObstacleAvoidance::~ObstacleAvoidance() {
@@ -58,12 +63,14 @@ void ObstacleAvoidance::setObstacleDetected(bool present) {
     obstacle_present = present;
 }
 
-void ObstacleAvoidance::laserScanCallback(const sensor_msgs::LaserScan::ConstPtr& data) {
+void ObstacleAvoidance::laserScanCallback(const
+            sensor_msgs::LaserScan
+            ::ConstPtr& data) {
     double distance = data->ranges[180];
-    //ROS_WARN_STREAM("Distance:" << distance);
+    // ROS_WARN_STREAM("Distance:" << distance);
     if (distance < 0.6) {
         setObstacleDetected(true);
-        return;        
+        return;
     }
     setObstacleDetected(false);
 }

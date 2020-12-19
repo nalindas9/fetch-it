@@ -43,7 +43,7 @@
 int main(int argc, char** argv) {
     // Initialize main node
     ros::init(argc, argv, "collect_main");
-    
+
     // ObstacleAvoidance class object
     ObstacleAvoidance obstacle_avoider;
     // Detectball class object
