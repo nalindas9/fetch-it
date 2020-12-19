@@ -36,12 +36,12 @@
  * Controls motion of the turtlebot 
  *		   
  */
-
-#include "ros/ros.h"
 #include <std_msgs/Int8.h>
-#include "geometry_msgs/Twist.h"
+#include "ros/ros.h"
 #include "../include/TurtleBot.h"
+#include "geometry_msgs/Twist.h"
 #include "../include/ObstacleAvoidance.h"
+
 
 TurtleBot::TurtleBot() {
     // Initialize to all zeros
@@ -51,9 +51,10 @@ TurtleBot::TurtleBot() {
     velocity.angular.x = 0.0;
     velocity.angular.y = 0.0;
     velocity.angular.z = 0.0;
- 
+
     velocity_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
-    detect_sub = nh.subscribe<std_msgs::Int8>("ball_present", 1000, &TurtleBot::detectCallback, this);
+    detect_sub = nh.subscribe<std_msgs::Int8>("ball_present",
+                     1000, &TurtleBot::detectCallback, this);
 }
 
 TurtleBot::~TurtleBot() {
@@ -70,19 +71,20 @@ void TurtleBot::turn(float angular_vel) {
     velocity.angular.z = angular_vel;
 }
 
-void TurtleBot::collect() {
-}
+// void TurtleBot::collect() {
+// }
 
-void TurtleBot::moveTurtle() { 
+void TurtleBot::moveTurtle() {
     // Looprate of 4 Hz
     ros::Rate rate(4);
-    
+
     while (ros::ok()) {
         // Define twist msg
         geometry_msgs::Twist twist;
         // True if obstacle present
         obstacle_present = obstacle_avoidance.checkObstacle();
-        ROS_WARN_STREAM("obstacle_present: " << obstacle_present << "ball_present:" << getBallPresent());
+        ROS_WARN_STREAM("obstacle_present: " << obstacle_present
+                         << "ball_present:" << getBallPresent());
         if (!obstacle_present && getBallPresent()) {
             ROS_WARN_STREAM("Moving forward ...");
             moveAhead(-0.12);
@@ -97,8 +99,8 @@ void TurtleBot::moveTurtle() {
     }
 }
 
-void TurtleBot::reset() {
-}
+// void TurtleBot::reset() {
+// }
 
 void TurtleBot::setBallPresent(bool ball_present_) {
     ball_present = ball_present_;
@@ -121,7 +123,7 @@ bool TurtleBot::getObstaclePresent() {
 }
 
 void TurtleBot::detectCallback(const std_msgs::Int8::ConstPtr& msg) {
-    //ROS_WARN_STREAM("I heard: [%s]" << msg->data);
+    // ROS_WARN_STREAM("I heard: [%s]" << msg->data);
     (msg->data == 1) ? setBallPresent(true) : setBallPresent(false);
-    //ROS_WARN_STREAM("ball_present inside callback:" << getBallPresent());
+    // ROS_WARN_STREAM("ball_present inside callback:" << getBallPresent());
 }

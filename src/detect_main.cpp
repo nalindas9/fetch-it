@@ -46,13 +46,14 @@ int main(int argc, char** argv) {
     DetectBall detect_ball;
     ros::NodeHandle n;
     // ROS Publisher
-    ros::Publisher detect_pub = n.advertise<std_msgs::Int8>("ball_present", 1000);
+    ros::Publisher detect_pub = n.advertise<std_msgs::Int8>
+                                    ("ball_present", 1000);
     std_msgs::Int8 msg;
     while (ros::ok()) {
         cv::Mat image = detect_ball.getCvImage();
         if (!image.empty()) {
             bool ball_detected = detect_ball.templateMatching();
-            //ROS_WARN_STREAM("ball_detected: " << ball_detected);
+            // ROS_WARN_STREAM("ball_detected: " << ball_detected);
             msg.data = ball_detected;
             detect_pub.publish(msg);
         }

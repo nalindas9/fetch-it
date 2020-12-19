@@ -64,8 +64,8 @@ TEST(ObstacleAvoidanceTest, obstacleDetected) {
  */
 TEST(ObstacleAvoidanceTest, checkObstacle) {
     ObstacleAvoidance obstacleavoidance_dummy;
-    /// Define distance threshold to detect obstacles 
+    /// Define distance threshold to detect obstacles
     double distance = 0.3;
-    //how to call lasersensorcallback function()
+    // how to call lasersensorcallback function()
     EXPECT_TRUE(obstacleavoidance_dummy.checkObstacle());
 }

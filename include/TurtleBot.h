@@ -40,11 +40,12 @@
 
 #pragma once 
 
+#include "../include/ObstacleAvoidance.h"
+#include "../include/DetectBall.h"
 #include "ros/ros.h"
 #include <std_msgs/Int8.h>
 #include "geometry_msgs/Twist.h"
-#include "../include/ObstacleAvoidance.h"
-#include "../include/DetectBall.h"
+
 
 class TurtleBot {
     private:
@@ -71,7 +72,7 @@ class TurtleBot {
         // Publishing Rate
         int publish_rate;
 
-    public: 
+    public:
         /**
          * @brief Constructor for Turtlebot class
          * @param none
