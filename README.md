@@ -112,4 +112,16 @@ roslaunch fetch-it fetch-it.launch
 ## Accessing the UML Diagrams
 - To access the UML Diagrams, go the UML Sub-Directory in the repository which contains folders for initial as well as the revised UML diagrams.
 
-
+## Doxygen 
+To install doxygen run the following command:
+```
+sudo apt-get install doxygen
+```
+Now from the cloned directory run:
+```
+doxygen Doxygen
+```
+Generated doxygen files are in html format and you can find them in ./docs folder with the following command,
+```
+firefox docs/html/index.html
+```
