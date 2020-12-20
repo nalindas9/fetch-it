@@ -61,8 +61,8 @@ TEST(TurtleBotTest, moveAheadTest) {
     TurtleBot turtle_dummy;
     turtle_dummy.moveAhead(0.4);
     geometry_msgs::Twist velocity = turtle_dummy.getVelocity();
-    EXPECT_EQ(0.4, velocity.linear.x);
-    EXPECT_EQ(0, velocity.angular.z);
+    EXPECT_FLOAT_EQ(0.4, velocity.linear.x);
+    EXPECT_FLOAT_EQ(0.0, velocity.angular.z);
 }
 
 /**
@@ -72,23 +72,8 @@ TEST(TurtleBotTest, turnTest) {
     TurtleBot turtle_dummy;
     turtle_dummy.turn(0.2);
     geometry_msgs::Twist velocity = turtle_dummy.getVelocity();
-    EXPECT_EQ(0, velocity.linear.x);
-    EXPECT_EQ(0.2, velocity.angular.z);
-}
-
-/**
- * @brief	Test moveTurtle method
- */
-TEST(TurtleBotTest, moveTurtleTest) {
-    TurtleBot turtle_dummy;
-    turtle_dummy.setObstaclePresent(true);
-    geometry_msgs::Twist velocity = turtle_dummy.getVelocity();
-    EXPECT_EQ(-0.12, velocity.linear.x);
-    EXPECT_EQ(0, velocity.angular.z);
-    turtle_dummy.setObstaclePresent(false);
-    velocity = turtle_dummy.getVelocity();
-    EXPECT_EQ(0, velocity.linear.x);
-    EXPECT_EQ(0.8, velocity.angular.z);
+    EXPECT_FLOAT_EQ(0, velocity.linear.x);
+    EXPECT_FLOAT_EQ(0.2, velocity.angular.z);
 }
 
 /**

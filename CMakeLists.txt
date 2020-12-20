@@ -49,12 +49,12 @@ target_link_libraries(
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")
 
   add_rostest_gtest(
-    fetch-it-test
+    fetch_it_test
     test/fetch-it-test.launch
     test/TurtleBot_test.cpp
-    ## test/ObstacleAvoidance_test.cpp
+    test/ObstacleAvoidance_test.cpp
     test/main_test.cpp
-    ## test/DetectBall_test.cpp
+    test/DetectBall_test.cpp
     src/ObstacleAvoidance.cpp
     src/TurtleBot.cpp
     src/DetectBall.cpp
@@ -62,13 +62,13 @@ target_link_libraries(
   )
 
   target_link_libraries(
-     fetch-it-test
+     fetch_it_test
    ${catkin_LIBRARIES}
    ${OpenCV_LIBS}
   )
 
   add_dependencies(
-    fetch-it-test
+    fetch_it_test
     detect_ball
     collect_objects
     ${catkin_EXPORTED_TARGETS}

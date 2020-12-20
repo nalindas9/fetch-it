@@ -102,6 +102,10 @@ void DetectBall::kinectCallback(const sensor_msgs::Image::ConstPtr& msg) {
   }
 }
 
+void DetectBall::setCvImage(cv::Mat cv_image_) {
+    cv_image = cv_image_;
+}
+
 cv::Mat DetectBall::getCvImage() {
     return cv_image;
 }
