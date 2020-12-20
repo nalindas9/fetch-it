@@ -1,4 +1,4 @@
-dist: xenial
+dist: bionic
 cache: apt
 language: generic
 os: linux
@@ -6,7 +6,7 @@ os: linux
 # Configuration variables. All variables are global
 env:
   global:
-    - ROS_DISTRO=kinetic
+    - ROS_DISTRO=melodic
     - ROS_CI_DESKTOP="`lsb_release -cs`"  # e.g. [precise|trusty|...]
     - CI_SOURCE_PATH=$(pwd)
     - ROSINSTALL_FILE=$CI_SOURCE_PATH/dependencies.rosinstall
