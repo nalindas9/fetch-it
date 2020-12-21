@@ -111,6 +111,13 @@ class DetectBall {
   }
 
   /**
+   * @brief Set OpenCV converted image
+   * @param None None
+   * @return Converted OpenCV Image
+   */
+  void setCvImage(cv::Mat cv_image);
+
+  /**
    * @brief Get OpenCV converted image
    * @param None None
    * @return Converted OpenCV Image

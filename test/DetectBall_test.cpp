@@ -39,10 +39,8 @@
 
 #include <gtest/gtest.h>
 #include <ros/ros.h>
+#include <ros/package.h>
 #include "../include/TurtleBot.h"
-
-
-
 
 /**
  * @brief Check getters and setters
@@ -51,7 +49,12 @@
 TEST(DetectBallTest, objectNotDetected) {
     DetectBall detectball_dummy;
     detectball_dummy.setBallDetected(false);
+    cv::Mat empty_img;
+    detectball_dummy.setCvImage(empty_img);
     EXPECT_FALSE(detectball_dummy.getBallDetected());
+    cv::Mat get_img = detectball_dummy.getCvImage();
+    EXPECT_TRUE(get_img.empty());
+    
 }
 
 /**
@@ -69,8 +72,8 @@ TEST(DetectBallTest, objectDetected) {
  */
 TEST(DetectionTest, templateMatched) {
     DetectBall detectball_dummy;
-    cv::Mat cv_image = cv::imread("../data/Tennis_Ball.jpg");
-    detectball_dummy.templateMatching();
+    cv::Mat cv_image = cv::imread(ros::package::getPath("fetch-it") + "/data/Tennis_Ball.jpg");
+    detectball_dummy.setCvImage(cv_image);
     EXPECT_FALSE(detectball_dummy.templateMatching());
 }
 
