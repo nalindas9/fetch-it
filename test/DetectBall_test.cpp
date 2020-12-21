@@ -42,9 +42,6 @@
 #include <ros/package.h>
 #include "../include/TurtleBot.h"
 
-
-
-
 /**
  * @brief Check getters and setters
  */
@@ -52,7 +49,12 @@
 TEST(DetectBallTest, objectNotDetected) {
     DetectBall detectball_dummy;
     detectball_dummy.setBallDetected(false);
+    cv::Mat empty_img;
+    detectball_dummy.setCvImage(empty_img);
     EXPECT_FALSE(detectball_dummy.getBallDetected());
+    cv::Mat get_img = detectball_dummy.getCvImage();
+    EXPECT_TRUE(get_img.empty());
+    
 }
 
 /**
