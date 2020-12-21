@@ -74,6 +74,7 @@ TEST(DetectionTest, templateMatched) {
     DetectBall detectball_dummy;
     cv::Mat cv_image = cv::imread(ros::package::getPath("fetch-it") + "/data/Tennis_Ball.jpg");
     detectball_dummy.setCvImage(cv_image);
+    // Check for condition when ball is detected
     EXPECT_FALSE(detectball_dummy.templateMatching());
 }
 

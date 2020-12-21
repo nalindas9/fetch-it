@@ -60,7 +60,7 @@ TEST(ObstacleAvoidanceTest, obstacleDetected) {
 }
 
 /**
- * @brief Check obstacle
+ * @brief Test to Check obstacle
  */
 TEST(ObstacleAvoidanceTest, checkObstacle) {
     ObstacleAvoidance obstacleavoidance_dummy;

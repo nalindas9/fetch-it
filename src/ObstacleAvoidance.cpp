@@ -46,7 +46,9 @@
 #include "../include/ObstacleAvoidance.h"
 
 ObstacleAvoidance::ObstacleAvoidance() {
+    // Initialize the obstacle present to false
     obstacle_present = false;
+    // ROS Subscriber to get data from the laser sensor 
     LaserScan = nh.subscribe<sensor_msgs::LaserScan>("/scan",
                  1000, &ObstacleAvoidance::laserScanCallback,
                  this);
@@ -63,6 +65,7 @@ void ObstacleAvoidance::setObstacleDetected(bool present) {
     obstacle_present = present;
 }
 
+// Read Sensor data to get obstacle distances with respect to the robot 
 void ObstacleAvoidance::laserScanCallback(const
             sensor_msgs::LaserScan
             ::ConstPtr& data) {
@@ -76,6 +79,7 @@ void ObstacleAvoidance::laserScanCallback(const
 }
 
 bool ObstacleAvoidance::checkObstacle() {
+    // Check if there is any obstacle 
     if (getObstacleDetected()) {
         ROS_WARN_STREAM("Obstacle Ahead!");
         return true;

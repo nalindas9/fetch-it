@@ -121,5 +121,21 @@ We will use launch file to run the package. In a new terminal, enter\+:
  \hypertarget{md_README_autotoc_md16}{}\doxysection{Accessing the UML Diagrams}\label{md_README_autotoc_md16}
 
 \begin{DoxyItemize}
-\item To access the UML Diagrams, go the UML Sub-\/\+Directory in the repository which contains folders for initial as well as the revised UML diagrams. 
-\end{DoxyItemize}
+\item To access the UML Diagrams, go the UML Sub-\/\+Directory in the repository which contains folders for initial as well as the revised UML diagrams.
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md17}{}\doxysection{Doxygen}\label{md_README_autotoc_md17}
+To install doxygen run the following command\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo apt-\/get install doxygen }
+
+\end{DoxyCode}
+ Now from the cloned directory run\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{doxygen Doxygen }
+
+\end{DoxyCode}
+ Generated doxygen files are in html format and you can find them in ./docs folder with the following command, 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{firefox docs/html/index.html }
+
+\end{DoxyCode}
+ 

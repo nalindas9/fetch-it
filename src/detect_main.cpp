@@ -55,6 +55,7 @@ int main(int argc, char** argv) {
             bool ball_detected = detect_ball.templateMatching();
             // ROS_WARN_STREAM("ball_detected: " << ball_detected);
             msg.data = ball_detected;
+            // ROS Publisher 
             detect_pub.publish(msg);
         }
         ros::spinOnce();

@@ -46,6 +46,8 @@
  *  @param argv Argument vector
  *  @return Exit code 1 or 0
  */
+
+// Run all tests that are declared 
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
   ros::init(argc, argv, "fetch_it_test");

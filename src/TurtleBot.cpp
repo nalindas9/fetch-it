@@ -36,13 +36,20 @@
  * Controls motion of the turtlebot 
  *		   
  */
+// Add ROS headers 
 #include <std_msgs/Int8.h>
 #include "ros/ros.h"
 #include "../include/TurtleBot.h"
 #include "geometry_msgs/Twist.h"
 #include "../include/ObstacleAvoidance.h"
 
+// Implement Turtlebot Class
 
+/**
+ * @brief Laser Callback function
+ * @param data from LaserScan node
+ * @return void
+ *  **/
 TurtleBot::TurtleBot() {
     // Initialize to all zeros
     velocity.linear.x = 0.0;
@@ -52,7 +59,10 @@ TurtleBot::TurtleBot() {
     velocity.angular.y = 0.0;
     velocity.angular.z = 0.0;
 
+    // Publsh the velocities to /cmd_vel topic
     velocity_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
+
+    // ROS Subscriber for ball_present topic
     detect_sub = nh.subscribe<std_msgs::Int8>("ball_present",
                      1000, &TurtleBot::detectCallback, this);
 }
@@ -85,16 +95,22 @@ void TurtleBot::moveTurtle() {
         obstacle_present = obstacle_avoidance.checkObstacle();
         ROS_WARN_STREAM("obstacle_present: " << obstacle_present
                          << "ball_present:" << getBallPresent());
+
+        // Start moving the robot if no obstacle detected
         if (!obstacle_present && getBallPresent()) {
             ROS_WARN_STREAM("Moving forward ...");
             moveAhead(-0.12);
+
+        // Start turning the robot to avoid obstacle 
         } else {
             ROS_WARN_STREAM("Rotating ...");
             turn(0.8);
         }
-
+        
+        // Publish the velocties 
         velocity_pub.publish(velocity);
         ros::spinOnce();
+        // Pause to maintain loop rate
         rate.sleep();
     }
 }
