@@ -1,8 +1,13 @@
 /**
- * BSD 3-Clause License
- *
- * @copyright (c) 2020, Sukoon Sarin, Nalin Das, Nidhi Bhojak
+ * @file TurtleBot_test.cpp
+ * @brief Test file for DetectBall class
+ * @date 12/15/2020
+ * @author Sukoon Sarin
+ * @author Nalin Das
  * 
+ * @section LICENSE
+ *
+ * @copyright (c) 2020, Nalin Das, Sukoon Sarin, Nidhi Bhojak
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -25,87 +30,52 @@
  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @section DESCRIPTION 
+ * 
+ * File containing unit tests for turtlebot class
+ *		   
  */
 
+#include <gtest/gtest.h>
+#include <ros/ros.h>
+#include <ros/package.h>
+#include "../include/TurtleBot.h"
+
 /**
- * @file 	DetectBall.cpp
- * @author 	Sukoon Sarin 	- Driver
- * @author 	Nalin Das    	- Navigator
- * @author 	Nidhi Bhojak    - design Keeper 
- * @brief   Implements object detection using HSV method which detects color of 
- *          the ball in a certain range and creates a bounding box over it.
-*/
-#include "ros/ros.h"
-#include "cv_bridge/cv_bridge.h"
-#include "sensor_msgs/Image.h"
-#include "opencv2/imgproc/imgproc.hpp"
-#include "../include/DetectBall.h"
+ * @brief Check getters and setters
+ */
 
-DetectBall::DetectBall() {
-  kinect_subscriber = nh.subscribe("/camera/color/image_raw",
-                                   1,
-                                   &DetectBall::kinectCallback,
-                                   this);
+TEST(DetectBallTest, objectNotDetected) {
+    DetectBall detectball_dummy;
+    detectball_dummy.setBallDetected(false);
+    cv::Mat empty_img;
+    detectball_dummy.setCvImage(empty_img);
+    EXPECT_FALSE(detectball_dummy.getBallDetected());
+    cv::Mat get_img = detectball_dummy.getCvImage();
+    EXPECT_TRUE(get_img.empty());
+    
 }
 
-DetectBall::~DetectBall() {
+/**
+ * @brief Check getters and setters
+ */
+
+TEST(DetectBallTest, objectDetected) {
+    DetectBall detectball_dummy;
+    detectball_dummy.setBallDetected(true);
+    EXPECT_TRUE(detectball_dummy.getBallDetected());
 }
 
-bool DetectBall::templateMatching() {
-  // Convert image from BGR to HSV
-  cv::Mat cv_image = getCvImage();
-  // Apply gaussian blur
-  cv::GaussianBlur(cv_image, cv_image, cv::Size(3, 3), 0.1, 0.1);
-
-  cv::cvtColor(cv_image, hsv_image, cv::COLOR_BGR2HSV);
-  // Perform HSV Thresholding
-  cv::inRange(hsv_image,
-              cv::Scalar(0, 15, 0),
-              cv::Scalar(0, 255, 255),
-              mask_image);
-  // Apply erosion on masked images
-  cv::erode(mask_image, mask_image, cv::Mat(), cv::Point(-1, -1), 2, 1, 1);
-  // Apply dilation on masked image to remove any small blobs
-  cv::dilate(mask_image, mask_image, cv::Mat(), cv::Point(-1, -1), 2, 1, 1);
-
-  if (!mask_image.empty()) {
-    //cv::imshow("HSV Mask Image", mask_image);
-    //cv::waitKey(30);
-  }
-  // Find contours in the Mask Image
-  cv::findContours(mask_image,
-                   contours_array,
-                   CV_RETR_LIST,
-                   CV_CHAIN_APPROX_NONE);
-
-  if (cv::countNonZero(mask_image) == 0) {
-    setBallDetected(false);
-  } else {
-     setBallDetected(true);
-  }
-  return getBallDetected();
+/**
+ * @brief Test case for TemplateMatching method of DetectBall class
+ */
+TEST(DetectionTest, templateMatched) {
+    DetectBall detectball_dummy;
+    cv::Mat cv_image = cv::imread(ros::package::getPath("fetch-it") + "/data/Tennis_Ball.jpg");
+    detectball_dummy.setCvImage(cv_image);
+    EXPECT_FALSE(detectball_dummy.templateMatching());
 }
 
-void DetectBall::kinectCallback(const sensor_msgs::Image::ConstPtr& msg) {
-  // CV Bridge Image ptr object to store converted ROS to OpenCV Image
-  cv_bridge::CvImagePtr cv_img_ptr;
-  ROS_INFO_STREAM("Recieved msg from kinect sensor");
-  try {
-    cv_img_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-    cv_image = cv_img_ptr->image;
-    // cv::imshow("Converted CV Image", cv_image);
-    // cv::waitKey(30);
-  }
-  catch (cv_bridge::Exception& excep) {
-    ROS_ERROR_STREAM("CV_bridge Conversion Exception Raised!: "
-                    << excep.what());
-  }
-}
 
-void DetectBall::setCvImage(cv::Mat cv_image_) {
-    cv_image = cv_image_;
-}
 
-cv::Mat DetectBall::getCvImage() {
-    return cv_image;
-}
