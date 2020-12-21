@@ -45,11 +45,16 @@
 #include "opencv2/opencv.hpp"
 #include "opencv2/highgui/highgui.hpp"
 
+/** 
+ * Define class for ball detection 
+ * **/
+
 class DetectBall {
  private:
   /// Node Handle for ROS system
   ros::NodeHandle nh;
 
+  // ROS Subscriber for kinect camera
   ros::Subscriber kinect_subscriber;
 
   // Array to store contours for each image
@@ -60,7 +65,7 @@ class DetectBall {
 
   // For storing the HSV image and mask image
   cv::Mat mask_image, hsv_image;
-
+  
   bool ObjectDetected;
 
  public:

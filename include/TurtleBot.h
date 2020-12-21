@@ -122,15 +122,50 @@ class TurtleBot {
          *  **/
        void reset();
 
+       /**
+         * @brief Setter function for ball present check
+         * @param ball_present_ bool value
+         * @return void
+         *  **/
+
        void setBallPresent(bool ball_present_);
 
+       /**
+         * @brief Getter function to get ball present value
+         * @param none
+         * @return bool value
+         *  **/ 
        bool getBallPresent();
+
+       /**
+         * @brief Function to get velocities
+         * @param none
+         * @return velocity values for x, y, z
+         *  **/
 
        geometry_msgs::Twist getVelocity();
 
+       /**
+         * @brief Function to set obstacle present 
+         * @param present bool value
+         * @return void 
+         *  **/
+
        void setObstaclePresent(bool present);
 
+       /**
+         * @brief Function to get obstacle present 
+         * @param none 
+         * @return bool value true or false for obstacle present 
+         *  **/
+
        bool getObstaclePresent();
+
+       /**
+         * @brief Detect Callback fucntion
+         * @param msg 
+         * @return void
+         *  **/
 
        void detectCallback(const std_msgs::Int8::ConstPtr& msg);
 };

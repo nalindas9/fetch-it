@@ -42,6 +42,7 @@
 #include "ros/ros.h"
 #include "sensor_msgs/LaserScan.h"
 
+// Create class for obstacle detection 
 class ObstacleAvoidance {
     private:
         // Create the ROS Nodehandle
@@ -81,8 +82,20 @@ class ObstacleAvoidance {
          *  **/
 
         void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr& data);
- 
+        
+        /**
+         * @brief Getter function for obstacle detected
+         * @param none
+         * @return bool value 
+         *  **/
+
         bool getObstacleDetected();
+
+        /**
+         * @brief Setter function for obstacle detected
+         * @param present bool value
+         * @return void
+         *  **/
 
         void setObstacleDetected(bool present);
 };

@@ -41,6 +41,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include "../include/DetectBall.h"
 
+// ROS Subscriber to get feed from the camera
 DetectBall::DetectBall() {
   kinect_subscriber = nh.subscribe("/camera/color/image_raw",
                                    1,
