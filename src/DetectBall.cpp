@@ -69,8 +69,8 @@ bool DetectBall::templateMatching() {
   cv::dilate(mask_image, mask_image, cv::Mat(), cv::Point(-1, -1), 2, 1, 1);
 
   if (!mask_image.empty()) {
-    cv::imshow("HSV Mask Image", mask_image);
-    cv::waitKey(30);
+    //cv::imshow("HSV Mask Image", mask_image);
+    //cv::waitKey(30);
   }
   // Find contours in the Mask Image
   cv::findContours(mask_image,
