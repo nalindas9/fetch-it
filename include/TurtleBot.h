@@ -1,8 +1,11 @@
 /**
- * @file turtlebot.hpp
+ * @file turtlebot.h
  * @brief Header file to control the turtlebot motion
  * @date 12/07/2020
  * @author Nidhi Bhojak
+ * @author Nalin Das
+ * 
+ * @section LICENSE
  * 
  * BSD 3-Clause License
  *
@@ -30,83 +33,139 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+ * @section DESCRIPTION 
+ * 
+ * Header file for turtlebot motion control
  */
 
 #pragma once 
 
+#include "../include/ObstacleAvoidance.h"
+#include "../include/DetectBall.h"
 #include "ros/ros.h"
+#include <std_msgs/Int8.h>
 #include "geometry_msgs/Twist.h"
-#include "../ObstacleAvoidance.h"
-#include "../DetectBall.h"
 
-class Turtlebot {
+
+class TurtleBot {
     private:
+        // Obstacle avoidance object
+        ObstacleAvoidance obstacle_avoidance;
+        // DetectBall class object
+        DetectBall detect_ball;
+        
+        // Store ball detected status
+        bool ball_present;
         // Define ROS Nodehandle
         ros::NodeHandle nh;
-
+        // Store obstacle present status
+        bool obstacle_present;
         // Publisher to publish velocities
-        ros::Publisher pubVelocities;
+        ros::Publisher velocity_pub;
 
         // Twist Object for Velocities
-        geometry_msgs::Twist Velocity;
+        geometry_msgs::Twist velocity;
 
-        // Linear Velocity in X-axis
-        float linearVel;
-
-        // Angular Velocity about Z-axis
-        float angularVel;
+        // ROS subscriber to ball present topic
+        ros::Subscriber detect_sub;
 
         // Publishing Rate
-        int PublishRate;
+        int publish_rate;
 
-    public: 
+    public:
         /**
          * @brief Constructor for Turtlebot class
          * @param none
          * @return none
          *  **/
-        Turtlebot();
+        TurtleBot();
 
         /**
          * @brief Destructor for Turtlebot class
          * @param none
          * @return none
          *  **/
-        ~Turtlebot();
+        ~TurtleBot();
 
         /**
-         * @brief Function to move robot ahead
-         * @param none
-         * @return void
+         * @brief Function to move turtlebot ahead
+         * @param linear_vel Linear Velocity
+         * @return None
          *  **/
-        void moveAhead(float linearVal);
+        void moveAhead(float linear_vel);
 
         /**
          * @brief Function to rotate the robot
-         * @param none
+         * @param angular_vel Angular velocity
          * @return void
          *  **/
-        void turn(float angularVal);
+        void turn(float angular_vel);
 
         /**
-         * @brief Function to collect the Object 
+         * @brief Function to pick up the tennis ball 
          * @param none
-         * @return void
+         * @return None
          *  **/
         void collect();
 
         /**
-         * @brief Implementing algorithm for robot motion
-         * @param none
-         * @return none
+         * @brief Move the turtlebot while avoiding obstacles
+         * @param None None
+         * @return None
          *  **/
-        void moveTurtle(obstacleAvoidance& ObstacleAvoidance);
+        void moveTurtle();
 
         /**
          * @brief Reset Velocities
          * @param none
+         * @return None
+         *  **/
+       void reset();
+
+       /**
+         * @brief Setter function for ball present check
+         * @param ball_present_ bool value
          * @return void
          *  **/
-       bool reset();
 
-}
+       void setBallPresent(bool ball_present_);
+
+       /**
+         * @brief Getter function to get ball present value
+         * @param none
+         * @return bool value
+         *  **/ 
+       bool getBallPresent();
+
+       /**
+         * @brief Function to get velocities
+         * @param none
+         * @return velocity values for x, y, z
+         *  **/
+
+       geometry_msgs::Twist getVelocity();
+
+       /**
+         * @brief Function to set obstacle present 
+         * @param present bool value
+         * @return void 
+         *  **/
+
+       void setObstaclePresent(bool present);
+
+       /**
+         * @brief Function to get obstacle present 
+         * @param none 
+         * @return bool value true or false for obstacle present 
+         *  **/
+
+       bool getObstaclePresent();
+
+       /**
+         * @brief Detect Callback fucntion
+         * @param msg 
+         * @return void
+         *  **/
+
+       void detectCallback(const std_msgs::Int8::ConstPtr& msg);
+};

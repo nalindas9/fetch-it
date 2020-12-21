@@ -1,15 +1,11 @@
 /**
- * Copyright 2020 Nalin Das, Nidhi Bhojak, Sukoon Sarin
- * BSD 3-Clause License
- * 
- * @file ObstacleAvoidance.cpp
- * @brief Source file to implement obstacle avoidance class
- * @date 12/07/2020
+ * @file main_test.cpp
+ * @brief Test file for turtlebot class
+ * @date 12/15/2020
  * @author Nidhi Bhojak
  * @author Nalin Das
  * 
  * @section LICENSE
- * BSD 3-Clause License
  *
  * @copyright (c) 2020, Nalin Das, Sukoon Sarin, Nidhi Bhojak
  * All rights reserved.
@@ -37,53 +33,24 @@
  *
  * @section DESCRIPTION 
  * 
- * Source file to implement obstacle avoidance  
+ * Main file containing to run all unit tests
+ *		   
  */
 
-#include "ros/ros.h"
-#include "geometry_msgs/Twist.h"
-#include "sensor_msgs/LaserScan.h"
-#include "../include/ObstacleAvoidance.h"
+#include <gtest/gtest.h>
+#include <ros/ros.h>
 
-ObstacleAvoidance::ObstacleAvoidance() {
-    // Initialize the obstacle present to false
-    obstacle_present = false;
-    // ROS Subscriber to get data from the laser sensor 
-    LaserScan = nh.subscribe<sensor_msgs::LaserScan>("/scan",
-                 1000, &ObstacleAvoidance::laserScanCallback,
-                 this);
+/**
+ *  @brief Main function for test.cpp
+ *  @param argc Argument count
+ *  @param argv Argument vector
+ *  @return Exit code 1 or 0
+ */
+
+// Run all tests that are declared 
+int main(int argc, char** argv) {
+  testing::InitGoogleTest(&argc, argv);
+  ros::init(argc, argv, "fetch_it_test");
+  ros::NodeHandle nh;
+  return RUN_ALL_TESTS();
 }
-
-ObstacleAvoidance::~ObstacleAvoidance() {
-}
-
-bool ObstacleAvoidance::getObstacleDetected() {
-    return obstacle_present;
-}
-
-void ObstacleAvoidance::setObstacleDetected(bool present) {
-    obstacle_present = present;
-}
-
-// Read Sensor data to get obstacle distances with respect to the robot 
-void ObstacleAvoidance::laserScanCallback(const
-            sensor_msgs::LaserScan
-            ::ConstPtr& data) {
-    double distance = data->ranges[180];
-    // ROS_WARN_STREAM("Distance:" << distance);
-    if (distance < 0.6) {
-        setObstacleDetected(true);
-        return;
-    }
-    setObstacleDetected(false);
-}
-
-bool ObstacleAvoidance::checkObstacle() {
-    // Check if there is any obstacle 
-    if (getObstacleDetected()) {
-        ROS_WARN_STREAM("Obstacle Ahead!");
-        return true;
-    }
-    return false;
-}
-

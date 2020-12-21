@@ -1,15 +1,10 @@
 /**
- * Copyright 2020 Nalin Das, Nidhi Bhojak, Sukoon Sarin
- * BSD 3-Clause License
- * 
- * @file ObstacleAvoidance.cpp
- * @brief Source file to implement obstacle avoidance class
- * @date 12/07/2020
- * @author Nidhi Bhojak
+ * @file collect_main.cpp
+ * @brief Source main file for collection
+ * @date 12/12/2020
  * @author Nalin Das
  * 
  * @section LICENSE
- * BSD 3-Clause License
  *
  * @copyright (c) 2020, Nalin Das, Sukoon Sarin, Nidhi Bhojak
  * All rights reserved.
@@ -37,53 +32,26 @@
  *
  * @section DESCRIPTION 
  * 
- * Source file to implement obstacle avoidance  
+ * Main source file for the fetch-it object collection algorithm
+ *		   
  */
-
-#include "ros/ros.h"
-#include "geometry_msgs/Twist.h"
-#include "sensor_msgs/LaserScan.h"
+#include <ros/ros.h>
+#include <std_msgs/Int8.h>
 #include "../include/ObstacleAvoidance.h"
+#include "../include/TurtleBot.h"
 
-ObstacleAvoidance::ObstacleAvoidance() {
-    // Initialize the obstacle present to false
-    obstacle_present = false;
-    // ROS Subscriber to get data from the laser sensor 
-    LaserScan = nh.subscribe<sensor_msgs::LaserScan>("/scan",
-                 1000, &ObstacleAvoidance::laserScanCallback,
-                 this);
+int main(int argc, char** argv) {
+    // Initialize main node
+    ros::init(argc, argv, "collect_main");
+
+    // ObstacleAvoidance class object
+    ObstacleAvoidance obstacle_avoider;
+    // Detectball class object
+    DetectBall detect_ball;
+    // Turtlebot class object
+    TurtleBot turtlebot;
+    // Move the turtlebot
+    turtlebot.moveTurtle();
+    ros::spin();
+    return 0;
 }
-
-ObstacleAvoidance::~ObstacleAvoidance() {
-}
-
-bool ObstacleAvoidance::getObstacleDetected() {
-    return obstacle_present;
-}
-
-void ObstacleAvoidance::setObstacleDetected(bool present) {
-    obstacle_present = present;
-}
-
-// Read Sensor data to get obstacle distances with respect to the robot 
-void ObstacleAvoidance::laserScanCallback(const
-            sensor_msgs::LaserScan
-            ::ConstPtr& data) {
-    double distance = data->ranges[180];
-    // ROS_WARN_STREAM("Distance:" << distance);
-    if (distance < 0.6) {
-        setObstacleDetected(true);
-        return;
-    }
-    setObstacleDetected(false);
-}
-
-bool ObstacleAvoidance::checkObstacle() {
-    // Check if there is any obstacle 
-    if (getObstacleDetected()) {
-        ROS_WARN_STREAM("Obstacle Ahead!");
-        return true;
-    }
-    return false;
-}
-

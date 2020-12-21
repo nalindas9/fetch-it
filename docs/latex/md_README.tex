@@ -1,0 +1,141 @@
+\hypertarget{md_README_autotoc_md1}{}\doxysection{Autonomous Robot to collect tennis balls from the court}\label{md_README_autotoc_md1}
+\href{https://travis-ci.org/github/nalindas9/fetch-it}{\texttt{ }} \href{https://coveralls.io/github/nalindas9/fetch-it?branch=main}{\texttt{ }} \href{https://github.com/nalindas9/fetch-it/blob/feature/nalindas9/initialize-repository/LICENSE}{\texttt{ }}\hypertarget{md_README_autotoc_md2}{}\doxysection{Overview}\label{md_README_autotoc_md2}
+Robotics has long been an interesting part of the sports industry. Some of the examples are Robo\+Cup, Basketball playing Robot CUE etc. Our group is committed to developing a robust autonomous collection robot for ACME’s tennis balls collection application. According to the studies, most of the time is spent on collecting the balls rather than the actual practice. Hence, we are planning to propose an autonomous robot to carry out the tennis ball collection activity inside a tennis court which will reduce the overall time spent on the collection activity.
+
+For the purpose of this project, we are only focusing on the ball identification and collection task. The robot will be deployed in a virtual tennis court environment using Gazebo and will roam around identifying and collecting the tennis balls. The identification task is addressed using a monocular camera mounted on the robot. We plan to leverage color detection (in the RGB or HSV space) to identify if the object is present in the frame from the incoming video stream. The idea is to utilize a simple obstacle avoidance algorithm similar to the Roomba Vacuum Cleaner. The diagram depicting the overall framework process can be accessed from \href{https://drive.google.com/file/d/1x5PeSOjn5OzAIuLnxqx3R4edWLp_fohM/view?usp=sharing}{\texttt{ here}}\hypertarget{md_README_autotoc_md3}{}\doxysection{Team Members}\label{md_README_autotoc_md3}
+
+\begin{DoxyEnumerate}
+\item Nalin Das -\/ nalindas9
+\item Sukoon Sarin -\/ sukoonsarin
+\item Nidhi Bhojak -\/ nbhojak07
+\end{DoxyEnumerate}\hypertarget{md_README_autotoc_md4}{}\doxysection{Presentation}\label{md_README_autotoc_md4}
+
+\begin{DoxyItemize}
+\item The presentation slides can be viewed from \href{https://docs.google.com/presentation/d/1ziL8vnf1k-Nsx0coOIeDWfG2G3LviOGE_k53tatEt-w/edit?usp=sharing}{\texttt{ here}}
+\item Recorded Presentation Video can be accessed from \href{https://youtu.be/gi4kzVk1ybs}{\texttt{ here}}
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md5}{}\doxysection{License}\label{md_README_autotoc_md5}
+
+\begin{DoxyItemize}
+\item This project has been developed under the 3-\/Clause BSD License.
+\item Before cloning the repository, kindly go through the license \href{https://github.com/nbhojak07/fetch-it/blob/iteration-1/LICENSE}{\texttt{ here}}
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md6}{}\doxysection{Technologies Used}\label{md_README_autotoc_md6}
+
+\begin{DoxyItemize}
+\item Operating System -\/ Ubuntu 18.\+04
+\item Programming language -\/ C++ 11/14
+\item Open Source Libraries -\/ Open\+CV (Apache License)
+\item Build System -\/ CMake
+\item ROS Version -\/ Melodic
+\item Simulation Environment -\/ Gazebo
+\item Code Coverage -\/ Coveralls
+\item Automated Unit Testing -\/ Travic CI
+\item Version Control -\/ Git \& Github
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md7}{}\doxysection{AIP and Sprint Documents}\label{md_README_autotoc_md7}
+
+\begin{DoxyItemize}
+\item To access the AIP sheets, click \href{https://docs.google.com/spreadsheets/d/1h1RDyUNMMq0FCVfPDFFzh-2Qu_SgeK83dBcB3OKtEOY/edit\#gid=0}{\texttt{ here}}
+\item To access the Sprint Planning Notes, click \href{https://docs.google.com/document/d/13czpabipeWM1hxAIBa5MMN0HsTAbhcGeMKuGNPOWhuI/edit}{\texttt{ here}}
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md8}{}\doxysection{Known Issues and Bugs}\label{md_README_autotoc_md8}
+
+\begin{DoxyItemize}
+\item For the ball identification task, we will need to explore available detection algorithms and choose the best option among them.
+\item For the object collection task, we are figuring out a proper method that depicts the task. Like a vacuum cup or vanishing object on contact.
+\item Multiple balls in the camera frame could be an issue with our current approach, since our approach takes into account one ball in the camera frame for collection. This can be mitigated by using Laser\+Scanner from ROS to use distance to the nearest ball.
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md9}{}\doxysection{Install Dependencies}\label{md_README_autotoc_md9}
+\hypertarget{md_README_autotoc_md10}{}\doxysubsubsection{Install Gazebo and Turtlebot Packages}\label{md_README_autotoc_md10}
+
+\begin{DoxyItemize}
+\item This Project is developed using ROS Melodic.
+\item Make sure that the ROS Melodic is properly installed on your System. Follow ROS Melodic installation instructions from \href{http://wiki.ros.org/melodic/Installation/Ubuntu}{\texttt{ here}}
+\item The Full-\/\+Desktop Version will install Gazebo as well. To install Gazebo separately follow instructions from \href{http://gazebosim.org/tutorials?tut=install_ubuntu&cat=install}{\texttt{ here}}
+\item Ensure successful installation of Gazebo from the terminal by running the following command\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{gazebo }
+
+\end{DoxyCode}
+ The above command will laumch an empty world of the Gazebo Simulator.
+\item Install necessary turtlebot packages by running the following command\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo apt install ros-\/melodic-\/turtlebot-\/gazebo ros-\/melodic-\/turtlebot-\/apps ros-\/melodic-\/turtlebot-\/rviz-\/launchers }
+
+\end{DoxyCode}
+ 
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md11}{}\doxysubsubsection{Install Open\+CV Dependencies}\label{md_README_autotoc_md11}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo apt install build-\/essential cmake git libgtk2.0-\/dev pkg-\/config libavcodec-\/dev libavformat-\/dev libswscale-\/dev}
+\DoxyCodeLine{sudo apt install python3.5-\/dev python3-\/numpy libtbb2 libtbb-\/dev}
+\DoxyCodeLine{sudo apt install libjpeg-\/dev libpng-\/dev libtiff5-\/dev libjasper-\/dev libdc1394-\/22-\/dev libeigen3-\/dev libtheora-\/dev libvorbis-\/dev libxvidcore-\/dev libx264-\/dev sphinx-\/common libtbb-\/dev yasm libfaac-\/dev libopencore-\/amrnb-\/dev libopencore-\/amrwb-\/dev libopenexr-\/dev libgstreamer-\/plugins-\/base1.0-\/dev libavutil-\/dev libavfilter-\/dev libavresample-\/dev }
+
+\end{DoxyCode}
+ \hypertarget{md_README_autotoc_md12}{}\doxysubsubsection{Install Open\+CV}\label{md_README_autotoc_md12}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git clone https://github.com/opencv/opencv.git}
+\DoxyCodeLine{cd opencv }
+\DoxyCodeLine{git checkout 3.3.0 }
+\DoxyCodeLine{cd ..}
+\DoxyCodeLine{git clone https://github.com/opencv/opencv\_contrib.git}
+\DoxyCodeLine{cd opencv\_contrib}
+\DoxyCodeLine{git checkout 3.3.0}
+\DoxyCodeLine{cd ..}
+\DoxyCodeLine{cd opencv}
+\DoxyCodeLine{mkdir build}
+\DoxyCodeLine{cd build}
+\DoxyCodeLine{cmake -\/D CMAKE\_BUILD\_TYPE=RELEASE -\/D CMAKE\_INSTALL\_PREFIX=/usr/local -\/D INSTALL\_C\_EXAMPLES=ON -\/D WITH\_TBB=ON -\/D WITH\_V4L=ON -\/D WITH\_QT=ON -\/D OPENCV\_EXTRA\_MODULES\_PATH=../../opencv\_contrib/modules -\/D BUILD\_EXAMPLES=ON ..}
+\DoxyCodeLine{make -\/j\$(nproc)}
+\DoxyCodeLine{sudo make install}
+\DoxyCodeLine{sudo /bin/bash -\/c 'echo "{}/usr/local/lib"{} > /etc/ld.so.conf.d/opencv.conf'}
+\DoxyCodeLine{sudo ldconfig}
+
+\end{DoxyCode}
+ \hypertarget{md_README_autotoc_md13}{}\doxysection{Build}\label{md_README_autotoc_md13}
+Switch to your src sub-\/directory of the ROS Workspace to clone this repository 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<ROS Workspace>/src }
+
+\end{DoxyCode}
+ Run the following commands to clone and build this project\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git clone -\/-\/recursive https://github.com/nalindas9/fetch-\/it}
+\DoxyCodeLine{cd ..}
+\DoxyCodeLine{catkin\_make }
+
+\end{DoxyCode}
+ \hypertarget{md_README_autotoc_md14}{}\doxysection{Test}\label{md_README_autotoc_md14}
+Close and terminate everything including rosmaster. In a new terminal, switch to the ROS workspace and build the tests and type, 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd catkin\_ws}
+\DoxyCodeLine{source devel/setup.bash}
+\DoxyCodeLine{catkin\_make run\_tests\_fetch-\/it }
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md15}{}\doxysection{Run}\label{md_README_autotoc_md15}
+We will use launch file to run the package. In a new terminal, enter\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd catkin\_ws}
+\DoxyCodeLine{source devel/setup.bash}
+\DoxyCodeLine{roslaunch fetch-\/it fetch-\/it.launch }
+
+\end{DoxyCode}
+ \hypertarget{md_README_autotoc_md16}{}\doxysection{Accessing the UML Diagrams}\label{md_README_autotoc_md16}
+
+\begin{DoxyItemize}
+\item To access the UML Diagrams, go the UML Sub-\/\+Directory in the repository which contains folders for initial as well as the revised UML diagrams.
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md17}{}\doxysection{Doxygen}\label{md_README_autotoc_md17}
+To install doxygen run the following command\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo apt-\/get install doxygen }
+
+\end{DoxyCode}
+ Now from the cloned directory run\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{doxygen Doxygen }
+
+\end{DoxyCode}
+ Generated doxygen files are in html format and you can find them in ./docs folder with the following command, 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{firefox docs/html/index.html }
+
+\end{DoxyCode}
+ 

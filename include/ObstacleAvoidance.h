@@ -1,6 +1,6 @@
 /**
- * @file turtlebot.cpp
- * @brief Source file to implement turtlebot class
+ * @file ObstacleAvoidance.h
+ * @brief Header file to implement Obstacle Avoidance 
  * @date 12/07/2020
  * @author Nidhi Bhojak
  * 
@@ -33,53 +33,69 @@
  *
  * @section DESCRIPTION 
  * 
- * Controls motion of the turtlebot 
+ * Class file to implement obstacle avoidance  
  *		   
  */
 
+#pragma once
+
 #include "ros/ros.h"
-#include "geometry_msgs/Twist.h"
-#include "turtlebot.h"
-#include "detectBall.h"
-#include "obstacleAvoidance.h"
+#include "sensor_msgs/LaserScan.h"
 
-Turtlebot:Turtlebot() {
-    ROS_INFO_STREAM"Starting the turtlebot...");
-    obstacleAvoidance Obstacle;
-    linaerVel = 0;
-    angualrVel = 0; 
-    ros::NodeHandle nh; 
-    pubVelocities = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10 );
-    ROS_INFO_STREAM("Done Setting up Turtlebot!");
-}
+// Create class for obstacle detection 
+class ObstacleAvoidance {
+    private:
+        // Create the ROS Nodehandle
+        ros::NodeHandle nh;
 
-Turtlebot::~Turtlebot() {
-    if (reset()) {
-        ROS_INFO_STREAM("Reseting Turtlebot Velocities");
-    }
-}
+        // ROS Subscriber to get sensor data
+        ros::Subscriber LaserScan;
 
-void Turtlebot::moveAhead(float linearVal) {
-    Velocity.linear.x = linearVel;
-    Velocity.angular.z = 0.0;
+        // Boolean variable to check if obstacle present
+        bool obstacle_present;
+    public: 
+        /**
+         * @brief Constructor for obstacle avoidance class
+         * @param none
+         * @return none
+         *  **/
+        ObstacleAvoidance();
 
-    return;
-}
+        /**
+         * @brief Destructor for obstacle avoidance class
+         * @param none
+         * @return none
+         *  **/
+        ~ObstacleAvoidance();
 
-void Turtlebot::turn(float angularVal) {
-    Velocity.linear.x = 0.0;
-    Velocity.angular.z = angularVel;
+         /**
+         * @brief Check obstacle function to check if there is obstacle
+         * @param none 
+         * @return bool value true or false for obstacle found
+         *  **/
+        bool checkObstacle();
 
-    return;
-}
+        /**
+         * @brief Laser Callback function
+         * @param data from LaserScan node
+         * @return void
+         *  **/
 
-void Turtlebot::collect() {
-    return;
-}
+        void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr& data);
+        
+        /**
+         * @brief Getter function for obstacle detected
+         * @param none
+         * @return bool value 
+         *  **/
 
-void Turtlebot::moveTurtle() { 
-    return;
-}
-bool Turtlebot::reset() {
-    return true;
-}
+        bool getObstacleDetected();
+
+        /**
+         * @brief Setter function for obstacle detected
+         * @param present bool value
+         * @return void
+         *  **/
+
+        void setObstacleDetected(bool present);
+};

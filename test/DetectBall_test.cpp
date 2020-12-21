@@ -1,9 +1,9 @@
 /**
- * @file ObstacleAvoidance.hpp
- * @brief Header file to implement Obstacle Avoidance 
- * @date 12/07/2020
- * @author Nidhi Bhojak
- * 
+ * @file TurtleBot_test.cpp
+ * @brief Test file for DetectBall class
+ * @date 12/15/2020
+ * @author Sukoon Sarin
+ * @author Nalin Das
  * 
  * @section LICENSE
  *
@@ -33,65 +33,50 @@
  *
  * @section DESCRIPTION 
  * 
- * Class file to implement obstacle avoidance  
+ * File containing unit tests for turtlebot class
  *		   
  */
 
-#pragma once
+#include <gtest/gtest.h>
+#include <ros/ros.h>
+#include <ros/package.h>
+#include "../include/TurtleBot.h"
 
-#include "ros/ros.h"
-#include "sensor_msgs/LaserScan.h"
+/**
+ * @brief Check getters and setters
+ */
 
-class obstacleAvoidance {
-    private:
-        // Create the ROS Nodehandle
-        ros::NodeHandle nh;
-
-        // ROS Subscriber to get sensor data
-        ros::Subscriber LaserScan;
-
-        // Boolean variable to check the obstacle
-        bool isObstacle;
-
-        // BOt Velocities
-        float linearVel;
-        float angularVel;
-
-    public: 
-        /**
-         * @brief Constructor for obstacle avoidance class
-         * @param none
-         * @return none
-         *  **/
-        obstacleAvoidance();
-
-        /**
-         * @brief Destructor for obstacle avoidance class
-         * @param none
-         * @return none
-         *  **/
-        ~obstacleAvoidance();
-
-         /**
-         * @brief Check obstacle function to check if there is obstacle
-         * @param none 
-         * @return bool value true or false for obstacle found
-         *  **/
-        bool checkObstacle();
-
-        /**
-         * @brief Laser Callback function
-         * @param data from LaserScan node
-         * @return void
-         *  **/
-
-        void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr& data);
- 
-        bool getObstacleDetected(){
-            return isObstacle;
-        };
-
-        void setObstacleDetected(bool obstacle) {
-            isObstacle = obstacle;
-        }
+TEST(DetectBallTest, objectNotDetected) {
+    DetectBall detectball_dummy;
+    detectball_dummy.setBallDetected(false);
+    cv::Mat empty_img;
+    detectball_dummy.setCvImage(empty_img);
+    EXPECT_FALSE(detectball_dummy.getBallDetected());
+    cv::Mat get_img = detectball_dummy.getCvImage();
+    EXPECT_TRUE(get_img.empty());
+    
 }
+
+/**
+ * @brief Check getters and setters
+ */
+
+TEST(DetectBallTest, objectDetected) {
+    DetectBall detectball_dummy;
+    detectball_dummy.setBallDetected(true);
+    EXPECT_TRUE(detectball_dummy.getBallDetected());
+}
+
+/**
+ * @brief Test case for TemplateMatching method of DetectBall class
+ */
+TEST(DetectionTest, templateMatched) {
+    DetectBall detectball_dummy;
+    cv::Mat cv_image = cv::imread(ros::package::getPath("fetch-it") + "/data/Tennis_Ball.jpg");
+    detectball_dummy.setCvImage(cv_image);
+    // Check for condition when ball is detected
+    EXPECT_FALSE(detectball_dummy.templateMatching());
+}
+
+
+

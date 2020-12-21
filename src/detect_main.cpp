@@ -1,15 +1,10 @@
 /**
- * Copyright 2020 Nalin Das, Nidhi Bhojak, Sukoon Sarin
- * BSD 3-Clause License
- * 
- * @file ObstacleAvoidance.cpp
- * @brief Source file to implement obstacle avoidance class
- * @date 12/07/2020
- * @author Nidhi Bhojak
+ * @file detect_main.cpp
+ * @brief Source main file for detection
+ * @date 12/12/2020
  * @author Nalin Das
  * 
  * @section LICENSE
- * BSD 3-Clause License
  *
  * @copyright (c) 2020, Nalin Das, Sukoon Sarin, Nidhi Bhojak
  * All rights reserved.
@@ -37,53 +32,34 @@
  *
  * @section DESCRIPTION 
  * 
- * Source file to implement obstacle avoidance  
+ * Main source file for the fetch-it object detection algorithm
+ *		   
  */
+#include <ros/ros.h>
+#include <std_msgs/Int8.h>
+#include "../include/DetectBall.h"
 
-#include "ros/ros.h"
-#include "geometry_msgs/Twist.h"
-#include "sensor_msgs/LaserScan.h"
-#include "../include/ObstacleAvoidance.h"
-
-ObstacleAvoidance::ObstacleAvoidance() {
-    // Initialize the obstacle present to false
-    obstacle_present = false;
-    // ROS Subscriber to get data from the laser sensor 
-    LaserScan = nh.subscribe<sensor_msgs::LaserScan>("/scan",
-                 1000, &ObstacleAvoidance::laserScanCallback,
-                 this);
-}
-
-ObstacleAvoidance::~ObstacleAvoidance() {
-}
-
-bool ObstacleAvoidance::getObstacleDetected() {
-    return obstacle_present;
-}
-
-void ObstacleAvoidance::setObstacleDetected(bool present) {
-    obstacle_present = present;
-}
-
-// Read Sensor data to get obstacle distances with respect to the robot 
-void ObstacleAvoidance::laserScanCallback(const
-            sensor_msgs::LaserScan
-            ::ConstPtr& data) {
-    double distance = data->ranges[180];
-    // ROS_WARN_STREAM("Distance:" << distance);
-    if (distance < 0.6) {
-        setObstacleDetected(true);
-        return;
+int main(int argc, char** argv) {
+    // Initialize main node
+    ros::init(argc, argv, "detect_main");
+    // DetectBall class object
+    DetectBall detect_ball;
+    ros::NodeHandle n;
+    // ROS Publisher
+    ros::Publisher detect_pub = n.advertise<std_msgs::Int8>
+                                    ("ball_present", 1000);
+    std_msgs::Int8 msg;
+    while (ros::ok()) {
+        cv::Mat image = detect_ball.getCvImage();
+        if (!image.empty()) {
+            bool ball_detected = detect_ball.templateMatching();
+            // ROS_WARN_STREAM("ball_detected: " << ball_detected);
+            msg.data = ball_detected;
+            // ROS Publisher 
+            detect_pub.publish(msg);
+        }
+        ros::spinOnce();
     }
-    setObstacleDetected(false);
-}
 
-bool ObstacleAvoidance::checkObstacle() {
-    // Check if there is any obstacle 
-    if (getObstacleDetected()) {
-        ROS_WARN_STREAM("Obstacle Ahead!");
-        return true;
-    }
-    return false;
+    return 0;
 }
-
