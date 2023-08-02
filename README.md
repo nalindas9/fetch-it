@@ -15,6 +15,7 @@ For the purpose of this project, we are only focusing on the ball identification
 The diagram depicting the overall framework process can be accessed from [here](https://drive.google.com/file/d/1x5PeSOjn5OzAIuLnxqx3R4edWLp_fohM/view?usp=sharing)
 
 ## Workflow Architecture
+![Fetch-IT-Architecture](https://github.com/nalindas9/fetch-it/assets/44141068/b3bd442d-16bd-4dfc-bd94-9098d7316bc9)
 
 ![Fetch-IT_UML_ACTIVITY_DIAGRAM](https://github.com/nalindas9/fetch-it/assets/44141068/441955a2-7cd3-4514-b633-5ca9c4baecec)
 
