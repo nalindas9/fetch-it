@@ -5,6 +5,7 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/nalindas9/fetch-it/blob/feature/nalindas9/initialize-repository/LICENSE)
 
 ## Overview
+![Fetch-IT_REVISED_CLASS_DIAGRAM](https://github.com/nalindas9/fetch-it/assets/44141068/4b7379fc-5830-4648-9708-24319067da4b)
 
 ![FetchIT_ Quadchart_final](https://github.com/nalindas9/fetch-it/assets/44141068/57a943fb-f5d3-4505-bcef-ef068dde4dd8)
 
