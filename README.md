@@ -9,12 +9,16 @@
 
 ![FetchIT_ Quadchart_final](https://github.com/nalindas9/fetch-it/assets/44141068/57a943fb-f5d3-4505-bcef-ef068dde4dd8)
 
-![YOLO_System](https://github.com/nalindas9/fetch-it/assets/44141068/b97f60bc-7e17-4506-949f-651289253ed9)
-
 Robotics has long been an interesting part of the sports industry. Some of the examples are RoboCup, Basketball playing Robot CUE etc. Our group is committed to developing a robust autonomous collection robot for ACME’s tennis balls collection application. According to the studies, most of the time is spent on collecting the balls rather than the actual practice. Hence, we are planning to propose an autonomous robot to carry out the tennis ball collection activity inside a tennis court which will reduce the overall time spent on the collection activity. 
 
 For the purpose of this project, we are only focusing on the ball identification and collection task. The robot will be deployed in a virtual tennis court environment using Gazebo and will roam around identifying and collecting the tennis balls. The identification task is addressed using a monocular camera mounted on the robot. We plan to leverage color detection (in the RGB or HSV space) to identify if the object is present in the frame from the incoming video stream. The idea is to utilize a simple obstacle avoidance algorithm similar to the Roomba Vacuum Cleaner.
 The diagram depicting the overall framework process can be accessed from [here](https://drive.google.com/file/d/1x5PeSOjn5OzAIuLnxqx3R4edWLp_fohM/view?usp=sharing)
+
+## Workflow Architecture
+
+![Fetch-IT_UML_ACTIVITY_DIAGRAM](https://github.com/nalindas9/fetch-it/assets/44141068/441955a2-7cd3-4514-b633-5ca9c4baecec)
+
+![YOLO_System](https://github.com/nalindas9/fetch-it/assets/44141068/b97f60bc-7e17-4506-949f-651289253ed9)
 
 ## Team Members
 1. Nalin Das - nalindas9
