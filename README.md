@@ -6,6 +6,8 @@
 
 ## Overview
 
+![FetchIT_ Quadchart_final](https://github.com/nalindas9/fetch-it/assets/44141068/57a943fb-f5d3-4505-bcef-ef068dde4dd8)
+
 ![YOLO_System](https://github.com/nalindas9/fetch-it/assets/44141068/b97f60bc-7e17-4506-949f-651289253ed9)
 
 Robotics has long been an interesting part of the sports industry. Some of the examples are RoboCup, Basketball playing Robot CUE etc. Our group is committed to developing a robust autonomous collection robot for ACME’s tennis balls collection application. According to the studies, most of the time is spent on collecting the balls rather than the actual practice. Hence, we are planning to propose an autonomous robot to carry out the tennis ball collection activity inside a tennis court which will reduce the overall time spent on the collection activity. 
